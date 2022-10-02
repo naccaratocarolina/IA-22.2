@@ -48,3 +48,18 @@ acao(passar21, objetivo(J1, J2), objetivo(4, Y)):- % Jarra 1 cheia
 
 vizinho(N, FilhosN) :-
 	findall(Estado, acao(_, N, Estado), FilhosN).
+
+% ============== (d) e (e) - Busca em largura ==============
+
+% busca(EstadoInicial, EstadoFinal, Visitados, Caminho)
+
+busca(Ei, Ei, _, []).
+busca(Ei, Ef, Vizinhos, [Acao | Caminho]) :-
+	acao(Acao, Ei, X),
+	\+ member(X, Vizinhos),
+	busca(X, Ef, [X | Vizinhos], Caminho).
+
+% ?- busca(objetivo(0,0), objetivo(_, 2), vizinho(objetivo(0,0), _), Caminho).
+% O que ocorre é a ocorrência de estados repetidos,
+% fazendo com que o programa imprima true a cada passo,
+% entrando em loop.
